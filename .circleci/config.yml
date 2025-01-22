@@ -40,7 +40,7 @@ jobs:
           name: Build the Docker image
           command: docker build -t node-js-sample .
 
-      Test the running container
+      # Test the running container
       - run:
           name: Test the running container
           command: |
