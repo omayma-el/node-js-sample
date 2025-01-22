@@ -26,7 +26,7 @@ jobs:
       # Step 3: Build the Docker image
       - name: Build Docker image
         run: |
-          docker build -t $DOCKER_USERNAME/node-js-sample:latest -f dockerfiles/prod .
+          docker build -t $DOCKER_USERNAME/node-js-sample:latest .
 
       # Step 4: Run and test the Docker container
       - name: Test Docker container
