@@ -3,7 +3,7 @@ name: Build and Publish Docker Image
 on:
   push:
     branches:
-      - main  # Trigger workflow on push to the main branch
+      - '**'  # Trigger workflow on a push to any branch
   pull_request:
 
 jobs:
