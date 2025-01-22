@@ -31,13 +31,13 @@ jobs:
       # Step 4: Run and test the Docker container
       - name: Test Docker container
         run: |
-          docker tag node-js-sample ${{ secrets.DOCKER_USERNAME }}/node-js-sample:latest
-          docker run -d -p 3000:8080 --name app $DOCKER_USERNAME/node-js-sample:latest
+          docker run -d -p 3000:8080 --name app node-js-sample
           sleep 5
           curl -f http://localhost:3000 || (docker logs app && exit 1)
 
       # Step 5: Push the Docker image to Docker Hub
-      - name: Push Docker image to Docker Hub
+      - name: Push (and tag) Docker image to Docker Hub
         run: |
+          docker tag node-js-sample ${{ secrets.DOCKER_USERNAME }}/node-js-sample:latest
           docker push $DOCKER_USERNAME/node-js-sample:latest
 
