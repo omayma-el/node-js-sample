@@ -10,6 +10,10 @@ jobs:
   build-test-push:
     runs-on: ubuntu-latest  # Use the latest Ubuntu runner
 
+    env:  # Define global environment variables here
+      DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+      DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+
     steps:
       # Step 1: Check out the code
       - name: Checkout repository
@@ -17,9 +21,6 @@ jobs:
 
       # Step 2: Log in to Docker Hub
       - name: Log in to Docker Hub
-        env:
-          DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}  # Docker Hub username
-          DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}  # Docker Hub password/token
         run: |
           echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
 
