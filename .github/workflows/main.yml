@@ -26,11 +26,12 @@ jobs:
       # Step 3: Build the Docker image
       - name: Build Docker image
         run: |
-          docker build -t $DOCKER_USERNAME/node-js-sample:latest .
+          docker build -t node-js-sample:latest .
 
       # Step 4: Run and test the Docker container
       - name: Test Docker container
         run: |
+          docker tag node-js-sample:latest $DOCKER_USERNAME/node-js-sample:latest
           docker run -d -p 8080:8080 --name app $DOCKER_USERNAME/node-js-sample:latest
           sleep 5
           curl -f http://localhost:8080 || (docker logs app && exit 1)
