@@ -31,7 +31,7 @@ jobs:
       # Step 4: Run and test the Docker container
       - name: Test Docker container
         run: |
-          docker tag node-js-sample $DOCKER_USERNAME/node-js-sample:latest
+          docker tag node-js-sample ${{ secrets.DOCKER_USERNAME }}/node-js-sample:latest
           docker run -d -p 3000:8080 --name app $DOCKER_USERNAME/node-js-sample:latest
           sleep 5
           curl -f http://localhost:3000 || (docker logs app && exit 1)
