@@ -2,8 +2,8 @@ version: 2.1
 
 jobs:
   build-test-and-push:
-    docker:
-      - image: circleci/node:14
+    machine: # executor type
+      image: ubuntu-2204:current
 
     steps:
       - checkout
