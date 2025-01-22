@@ -27,7 +27,7 @@ jobs:
           command: |
             docker run -d -p 3000:3000 --name app node-js-sample
             sleep 5
-            curl -f http://localhost:8080 || (docker logs app && exit 1)
+            curl -f http://localhost:3000 || (docker logs app && exit 1)
 
       # Push the Docker image to Docker Hub only if tests pass
       - run:
