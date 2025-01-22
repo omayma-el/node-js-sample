@@ -35,3 +35,9 @@ jobs:
           command: |
             docker tag node-js-sample $DOCKERHUB_USERNAME/node-js-sample:latest
             docker push $DOCKERHUB_USERNAME/node-js-sample:latest
+
+workflows:
+  version: 2
+  build-and-push:
+    jobs:
+      - build-test-and-push
