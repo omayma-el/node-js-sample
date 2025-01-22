@@ -8,9 +8,6 @@ jobs:
     steps:
       - checkout
 
-      # Authenticate with Docker Hub
-      - setup_remote_docker:
-          version: 20.10
       - run:
           name: Log in to Docker Hub
           command: |
