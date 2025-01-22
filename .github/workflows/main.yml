@@ -1,0 +1,41 @@
+name: Build and Publish Docker Image
+
+on:
+  push:
+    branches:
+      - main  # Trigger workflow on push to the main branch
+  pull_request:
+
+jobs:
+  build-test-push:
+    runs-on: ubuntu-latest  # Use the latest Ubuntu runner
+
+    steps:
+      # Step 1: Check out the code
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      # Step 2: Log in to Docker Hub
+      - name: Log in to Docker Hub
+        env:
+          DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}  # Docker Hub username
+          DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}  # Docker Hub password/token
+        run: |
+          echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+
+      # Step 3: Build the Docker image
+      - name: Build Docker image
+        run: |
+          docker build -t $DOCKER_USERNAME/node-js-sample:latest -f dockerfiles/prod .
+
+      # Step 4: Run and test the Docker container
+      - name: Test Docker container
+        run: |
+          docker run -d -p 8080:8080 --name app $DOCKER_USERNAME/node-js-sample:latest
+          sleep 5
+          curl -f http://localhost:8080 || (docker logs app && exit 1)
+
+      # Step 5: Push the Docker image to Docker Hub
+      - name: Push Docker image to Docker Hub
+        run: |
+          docker push $DOCKER_USERNAME/node-js-sample:latest
